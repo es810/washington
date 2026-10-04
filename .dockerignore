@@ -1,0 +1,5 @@
+.git
+app/node_modules
+app/.output
+**/node_modules
+**/.output
