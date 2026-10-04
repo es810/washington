@@ -1,0 +1,200 @@
+/* Cascade layer order: reset lowest, then Tailwind/Quanta base, then
+ * components and finally utilities — so Quanta's q-* utilities (e.g.
+ * q-button-*) always win over global element resets. */
+@layer reset, theme, base, components, utilities;
+
+@import "tailwindcss" source(none);
+@source "../src";
+@source "../packages/quanta/src";
+@import "@higgsfield/quanta/tailwind.css";
+
+/* New in-app Quanta-style components (moved out of the quanta package). Their
+ * CSS uses Tailwind v4 @utility/@source, so it must load through this tailwind
+ * entry. Ordering mirrors quanta's components.css (composer after button;
+ * media-card + generation-card after media). */
+@import "./components/composer/composer.css";
+@import "./components/media-card/media-card.css";
+@import "./components/generation-card/generation-card.css";
+@import "./components/setting-trigger/setting-trigger.css";
+@import "./components/prompt-box/prompt-box.css";
+@import "./components/icon-tile/icon-tile.css";
+
+@import "tw-animate-css";
+
+@custom-variant dark (&:where([data-theme="default-dark"], [data-theme="default-dark"] *));
+
+/* ------------------------------------------------------------------
+ * Washington Analytica site token layer
+ * Client brand: navy #10243A, warm ivory #F7F5F0, muted gold #B59A64,
+ * charcoal #252B33. Independent brand; nothing here reaches for Quanta
+ * component utilities.
+ * ------------------------------------------------------------------ */
+@theme {
+  --spacing: 0.25rem;
+
+  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --color-navy: #10243a;
+  --color-navy-deep: #0b1a2b;
+  --color-navy-lift: #16304c;
+  --color-ivory: #f7f5f0;
+  --color-ivory-line: #e7e2d8;
+  --color-ivory-shade: #efebe2;
+  --color-gold: #b59a64;
+  --color-gold-soft: #c9b183;
+  --color-charcoal: #252b33;
+  --color-charcoal-soft: #4a525c;
+
+  /* Homepage hero palette (daytime video treatment) */
+  --color-hero-navy: #102f4a;
+  --color-hero-slate: #263e50;
+  --color-hero-orange: #e7792b;
+  --color-hero-ember: #a84316;
+
+  --ease-wa: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@layer base {
+  html {
+    background-color: #f7f5f0;
+    color: #252b33;
+    color-scheme: light;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    min-height: 100dvh;
+    background-color: #f7f5f0;
+    color: #252b33;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+  }
+
+  * {
+    border-color: var(--color-ivory-line);
+  }
+
+  ::selection {
+    background-color: #b59a64;
+    color: #10243a;
+  }
+
+  :focus-visible {
+    outline: 2px solid #b59a64;
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+
+  /* Anchors land clear of the sticky header. */
+  [id] {
+    scroll-margin-top: 6rem;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Entrance motion: fires ON MOUNT (never viewport-gated) so a headless
+ * full-page capture always shows every section. Reduced motion gets the
+ * final state immediately. */
+@keyframes wa-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .wa-rise {
+    animation: wa-rise 0.75s var(--ease-wa) both;
+  }
+  .wa-rise[data-delay="1"] {
+    animation-delay: 0.09s;
+  }
+  .wa-rise[data-delay="2"] {
+    animation-delay: 0.18s;
+  }
+  .wa-rise[data-delay="3"] {
+    animation-delay: 0.27s;
+  }
+}
+
+/* Hero photograph settles out of a small scale on first paint. */
+@keyframes wa-settle {
+  from {
+    transform: scale(1.06);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .wa-settle {
+    animation: wa-settle 1.6s var(--ease-wa) both;
+  }
+}
+
+/* Editorial gallery: a gentle hover zoom on the photographic frames only. The
+ * zoom is contained by the frame's own overflow, and the whole effect is
+ * suppressed under reduced motion (both rules live inside the media query, so
+ * no transform and no transition are applied). */
+@media (prefers-reduced-motion: no-preference) {
+  .wa-zoom {
+    transition: transform 700ms var(--ease-wa);
+  }
+
+  .wa-frame:hover .wa-zoom {
+    transform: scale(1.04);
+  }
+}
+
+/* Gentle reveal on scroll for the workshop rows. The starting state is applied
+ * by script only (see components/reveal.tsx), only to rows that begin below the
+ * fold, and only when motion is welcome, so content is never left invisible. */
+@media (prefers-reduced-motion: no-preference) {
+  .wa-reveal {
+    opacity: 0.35;
+    transform: translateY(18px);
+    transition:
+      opacity 900ms var(--ease-wa),
+      transform 900ms var(--ease-wa);
+  }
+
+  .wa-reveal-in {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Readability scrim for the daytime hero. A whisper of white held behind the
+ * type only: 20% at the left edge, gone by 55% of the width, and masked out
+ * vertically so it fades away well above the cityscape and never reaches it.
+ * The footage itself is untouched: full opacity, no filter. */
+.wa-hero-scrim {
+  background-image: linear-gradient(
+    to right,
+    rgb(255 255 255 / 0.2) 0%,
+    rgb(255 255 255 / 0) 55%
+  );
+  -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+}
+
+/* A very subtle light halo behind the hero type, so deep navy stays legible
+ * over the brightest clouds without raising the white overlay. */
+.wa-hero-shadow {
+  text-shadow:
+    0 1px 2px rgb(255 255 255 / 0.45),
+    0 2px 14px rgb(255 255 255 / 0.3);
+}
