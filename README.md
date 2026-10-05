@@ -52,9 +52,9 @@ Newsreader at weight 700.
 
 | File | Used by | Notes |
 | --- | --- | --- |
-| `hero-desktop.mp4` | Home hero | 1920x1080, ~9 s, seamless loop, no audio |
-| `hero-mobile.mp4` | Home hero under 768px | 720x1278 portrait crop of the same shot |
-| `hero-poster.jpg` / `hero-poster-mobile.jpg` | Home hero | Poster while the video loads, and the reduced-motion fallback |
+| `hero-capitol-desktop.mp4` | Home hero | 1920x1080, ~9 s, seamless loop, no audio |
+| `hero-capitol-mobile.mp4` | Home hero under 768px | 720x1278 portrait crop of the same shot |
+| `hero-capitol-poster.jpg` / `hero-capitol-poster-mobile.jpg` | Home hero | Poster while the video loads, and the reduced-motion fallback |
 | `logo-wa-brand.png` | Header | Navy and orange mark, transparent background |
 | `logo-wa-white.png` | Footer | Solid white knockout for dark grounds |
 | `founder-portrait.jpg` | About, home founder preview | 724x904 |

@@ -29,10 +29,10 @@ export const FOOTER_LINKS: NavItem[] = [
 ];
 
 export const ASSETS = {
-  heroVideoDesktop: "/assets/hero-desktop.mp4",
-  heroVideoMobile: "/assets/hero-mobile.mp4",
-  heroPoster: "/assets/hero-poster.jpg",
-  heroPosterMobile: "/assets/hero-poster-mobile.jpg",
+  heroVideoDesktop: "/assets/hero-capitol-desktop.mp4",
+  heroVideoMobile: "/assets/hero-capitol-mobile.mp4",
+  heroPoster: "/assets/hero-capitol-poster.jpg",
+  heroPosterMobile: "/assets/hero-capitol-poster-mobile.jpg",
   logoWhite: "/assets/logo-wa-white.png",
   logoBrand: "/assets/logo-wa-brand.png",
   founderPortrait: "/assets/founder-portrait.jpg",
