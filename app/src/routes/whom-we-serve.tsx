@@ -15,35 +15,29 @@ export const Route = createFileRoute("/whom-we-serve")({
 });
 
 type Audience = {
-  number: string;
   name: string;
   description?: string;
 };
 
 const AUDIENCES: Audience[] = [
   {
-    number: "01",
     name: "Corporations",
     description:
       "Corporations expanding operations in the United States or the Middle East.",
   },
   {
-    number: "02",
     name: "Diplomats",
     description: "Diplomats based in Washington, D.C.",
   },
   {
-    number: "03",
     name: "Media Outlets and International Organizations",
     description:
       "Media outlets and international organizations based in Washington, D.C.",
   },
   {
-    number: "04",
     name: "Investment Firms",
   },
   {
-    number: "05",
     name: "Government Relations Professionals",
     description: "New government relations hires.",
   },
@@ -72,30 +66,24 @@ function WhomWeServe() {
         </div>
       </section>
 
-      {/* Audience entries */}
+      {/* Audience entries, no numbering */}
       <section className="bg-ivory">
         <div className="mx-auto max-w-6xl px-5 py-20 md:px-8 md:py-28">
           <div className="border-t border-ivory-line">
             {AUDIENCES.map((audience) => (
               <div
-                key={audience.number}
+                key={audience.name}
                 className="grid gap-4 border-b border-ivory-line py-10 md:grid-cols-12 md:items-baseline md:gap-10 md:py-12"
               >
-                <span
-                  aria-hidden="true"
-                  className="font-display text-2xl leading-none tracking-[-0.02em] text-gold md:col-span-1 md:text-3xl"
-                >
-                  {audience.number}
-                </span>
                 <h2 className="font-display text-2xl leading-tight tracking-[-0.01em] text-navy md:col-span-5 md:text-3xl">
                   {audience.name}
                 </h2>
                 {audience.description ? (
-                  <p className="max-w-[54ch] text-[1.0625rem] leading-[1.8] text-charcoal-soft md:col-span-6">
+                  <p className="max-w-[56ch] text-[1.0625rem] leading-[1.8] text-charcoal-soft md:col-span-7">
                     {audience.description}
                   </p>
                 ) : (
-                  <span aria-hidden="true" className="hidden md:col-span-6 md:block" />
+                  <span aria-hidden="true" className="hidden md:col-span-7 md:block" />
                 )}
               </div>
             ))}

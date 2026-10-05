@@ -8,55 +8,87 @@ Cloudflare Worker.
 
 | Route | Page |
 | --- | --- |
-| `/` | Home: hero video, two entry buttons, introduction, four-image row, Our Expertise, Who We Serve, founder preview |
-| `/about` | About Us: overview, Our Founder (portrait and biography), Education, Books |
-| `/workshops` | Our Workshops: four alternating image and text sections |
+| `/` | Home: hero video, black outro band with the supporting line and two actions, introduction, four-image row, Our Expertise, Who We Serve, founder preview |
+| `/about` | About Us: overview, Our Founder (portrait and biography), Education and Books |
+| `/workshops` | Our Workshops: four equal topic cards, each with its own photograph |
 | `/whom-we-serve` | Whom We Serve: five audience entries |
+| `/contact` | Contact Us: address, email and an enquiry form |
 
 ## Layout
 
 ```
 app/
   src/routes/        file-based routes: index, about, workshops, whom-we-serve,
-                     plus __root.tsx which owns the document shell, header and footer
+                     contact, plus __root.tsx which owns the shell, header and footer
   src/components/    site-chrome.tsx (header, mobile menu, footer, logo)
-                     reveal.tsx (the gentle fade-in on scroll used by the workshop rows)
+                     contact-form.tsx (the enquiry form)
+                     reveal.tsx (gentle fade-in on scroll)
   src/lib/site.ts    navigation, footer links, asset paths, per-page titles
+  src/lib/api/       contact.functions.ts (the server function that accepts a message)
   src/styles.css     design tokens (colour, type, easing) and the motion utilities
   src/app-meta.json  page title, description, favicon, social share image
   public/assets/     all site imagery and the hero video
-  design-brief.md    the brief this build was made to
+  migrations/        0001_contact_messages.sql
+  design-brief.md    the brief the first build was made to
 ```
 
 ## Brand
 
-- Navy `#10243A`, warm ivory `#F7F5F0`, muted gold `#B59A64`, charcoal `#252B33`
-- Homepage hero palette: navy `#102F4A`, slate `#263E50`, orange `#E7792B`,
-  burnt orange `#A84316`
-- Headings in Newsreader (serif), body in Inter (sans), both loaded from Google
-  Fonts in `src/routes/__root.tsx`. The company name in the header and hero is
-  Newsreader at weight 700.
+Neutral gray palette with a single orange accent:
+
+- Charcoal `#333333` for dark grounds, headings and body type
+- Medium gray `#666666` for secondary text and elements
+- Light gray `#F2F2F2` for light surfaces, `#E8E8E8` for the alternating band
+- Orange `#E7792B` for buttons and accents, `#F0924E` on dark grounds,
+  `#A84316` for links on light grounds where the bright orange would not hold
+- Solid black band under the hero: `#1F1F1F`
 - The logo orange, sampled from the artwork, is `#E27123`
+
+Headings are set in Newsreader (serif) and body in Inter (sans), both loaded
+from Google Fonts in `src/routes/__root.tsx`. The company name in the header is
+Newsreader at weight 700.
 
 ## Assets
 
 | File | Used by | Notes |
 | --- | --- | --- |
-| `hero-desktop.mp4` | Home hero | 1920x1080, 24 fps, 13 s, seamless loop, no audio |
-| `hero-mobile.mp4` | Home hero under 768px | 720x1278 portrait crop framed on the Washington Monument |
+| `hero-desktop.mp4` | Home hero | 1920x1080, ~9 s, seamless loop, no audio |
+| `hero-mobile.mp4` | Home hero under 768px | 720x1278 portrait crop of the same shot |
 | `hero-poster.jpg` / `hero-poster-mobile.jpg` | Home hero | Poster while the video loads, and the reduced-motion fallback |
-| `logo-wa-brand.png` | Header, hero | Navy and orange mark, transparent background |
-| `logo-wa-white.png` | Footer | Solid white knockout for navy grounds |
+| `logo-wa-brand.png` | Header | Navy and orange mark, transparent background |
+| `logo-wa-white.png` | Footer | Solid white knockout for dark grounds |
 | `founder-portrait.jpg` | About, home founder preview | 724x904 |
-| `gallery-01-capitol.jpg` ... `gallery-04-election-2028.jpg` | Home four-image row | 900x600 each, 3:2 |
-| `workshop-01-capitol-meeting.jpg` ... `workshop-04-gulf-model.jpg` | Our Workshops | 1100x619 each, 16:9 |
+| `gallery-01-capitol.jpg` ... `gallery-04-election-2028.jpg` | Home four-image row | 900x600, 3:2 |
+| `workshop-01-capitol-meeting.jpg` ... `workshop-04-gulf-model.jpg` | Our Workshops cards | 1100x619, 16:9 |
 | `washington-dc-colonnade.png` | About page band | |
 | `washington-dc-rowhouses.png` | Our Workshops page band | |
 
 The hero video is mounted only when the visitor has not asked for reduced
 motion, so a reduced-motion visitor never downloads it and sees the poster
 instead. The two encodes are chosen by viewport width, so phones never fetch the
-landscape file.
+landscape file. The hero frame is anchored top: at 16:9 the container matches the
+video's aspect and nothing is cropped, and on wider screens the crop comes off
+the dark foreground rather than the sky the headline sits in.
+
+## The contact form
+
+Submissions go to a server function (`src/lib/api/contact.functions.ts`) which:
+
+1. validates name, email and message on the server as well as in the browser;
+2. stores the message in D1, in `contact_messages`, via the migration in
+   `app/migrations/`. Storing it is what makes a submission accepted;
+3. then hands it to a transactional email provider, if one is configured.
+
+Email delivery to Info@washingtonanalytica.com needs ONE secret, set as an
+environment variable, not in code:
+
+- `CONTACT_EMAIL_API_KEY` — an API key for Resend's send API
+- `CONTACT_EMAIL_FROM` — optional, a verified sender; without it the provider's
+  test sender is used, which still delivers to the address above
+
+Until that key is set, messages are stored but not emailed, and the form says
+"received" rather than "sent", so it never claims a delivery that did not happen.
+D1 is enabled in `app/app.manifest.json` (`"db": true`) and is bound as `env.DB`.
 
 ## Running it
 

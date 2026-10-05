@@ -74,7 +74,7 @@ export function SiteHeader() {
           aria-label={`${SITE.name} home`}
         >
           <Monogram className="h-[30px] md:h-9" tone="brand" />
-          <span className="font-display text-[1.0625rem] font-bold leading-none tracking-[-0.01em] text-hero-navy md:text-xl">
+          <span className="font-display text-[1.0625rem] font-bold leading-none tracking-[-0.01em] text-navy md:text-xl">
             {SITE.name}
           </span>
         </Link>

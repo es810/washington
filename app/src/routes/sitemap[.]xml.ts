@@ -5,6 +5,7 @@ const PAGES = [
   { path: "/about", priority: "0.8", changefreq: "yearly" },
   { path: "/workshops", priority: "0.8", changefreq: "yearly" },
   { path: "/whom-we-serve", priority: "0.7", changefreq: "yearly" },
+  { path: "/contact", priority: "0.7", changefreq: "yearly" },
 ];
 
 export const Route = createFileRoute("/sitemap.xml")({

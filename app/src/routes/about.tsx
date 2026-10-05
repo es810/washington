@@ -14,32 +14,6 @@ export const Route = createFileRoute("/about")({
   component: About,
 });
 
-const EDUCATION = [
-  {
-    degree: "Bachelor\u2019s degree in Political Science",
-    institution: "Cairo University",
-  },
-  {
-    degree: "Master\u2019s degree in International Relations",
-    institution: "University of Akron, Ohio",
-  },
-  {
-    degree: "Master of Business Administration (MBA)",
-    institution: "American University, Washington, D.C.",
-  },
-];
-
-const BOOKS = [
-  {
-    title: "America and the Egyptian Revolution: A Testimony from Washington",
-    year: "2014",
-  },
-  {
-    title: "Trump First: How the President Is Changing America and the World",
-    year: "2020",
-  },
-];
-
 function About() {
   return (
     <>
@@ -128,7 +102,7 @@ function About() {
                 Mohamed Elmenshawy
               </p>
               <p className="mt-4 text-[0.75rem] uppercase tracking-[0.2em] text-gold">
-                Founder, Washington Analytica
+                Founder and Executive Director, Washington Analytica
               </p>
               <span aria-hidden="true" className="mt-8 block h-px w-full bg-ivory-line" />
               <div className="mt-8 max-w-[64ch] space-y-6 text-[1.0625rem] leading-[1.8] text-charcoal">
@@ -175,47 +149,33 @@ function About() {
         </div>
       </section>
 
-      {/* Education */}
+      {/* Education and books, as one continuous text section */}
       <section className="bg-ivory">
         <div className="mx-auto max-w-6xl px-5 py-20 md:px-8 md:py-28">
-          <h2 className="font-display text-3xl leading-tight tracking-[-0.02em] text-navy md:text-4xl">
-            Education
-          </h2>
-          <dl className="mt-12 max-w-4xl border-t border-ivory-line md:mt-16">
-            {EDUCATION.map((entry) => (
-              <div
-                key={entry.degree}
-                className="grid gap-2 border-b border-ivory-line py-7 md:grid-cols-12 md:items-baseline md:gap-8"
-              >
-                <dt className="font-display text-xl leading-snug tracking-[-0.01em] text-navy md:col-span-7 md:text-2xl">
-                  {entry.degree}
-                </dt>
-                <dd className="text-[0.9375rem] leading-relaxed text-charcoal-soft md:col-span-5">
-                  {entry.institution}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-      </section>
-
-      {/* Books */}
-      <section className="border-t border-ivory-line bg-ivory-shade">
-        <div className="mx-auto max-w-6xl px-5 py-20 md:px-8 md:py-28">
-          <h2 className="font-display text-3xl leading-tight tracking-[-0.02em] text-navy md:text-4xl">
-            Books
-          </h2>
-          <div className="mt-12 grid gap-12 md:mt-16 md:grid-cols-2 md:gap-16">
-            {BOOKS.map((book) => (
-              <article key={book.title} className="border-t border-navy/20 pt-8">
-                <h3 className="font-display text-2xl leading-snug tracking-[-0.01em] text-navy md:text-[1.75rem]">
-                  {book.title}
-                </h3>
-                <p className="mt-5 text-[0.75rem] uppercase tracking-[0.2em] text-gold">
-                  {book.year}
-                </p>
-              </article>
-            ))}
+          <div className="mx-auto max-w-[68ch]">
+            <h2 className="font-display text-3xl leading-tight tracking-[-0.02em] text-navy md:text-4xl">
+              Education and Books
+            </h2>
+            <div className="mt-10 space-y-6 text-[1.0625rem] leading-[1.8] text-charcoal">
+              <p>
+                Mohamed Elmenshawy holds a Bachelor’s degree in Political Science
+                from Cairo University, a Master’s degree in International
+                Relations from the University of Akron in Ohio, and a Master of
+                Business Administration from American University in Washington,
+                D.C.
+              </p>
+              <p>
+                He is the author of{" "}
+                <em>
+                  America and the Egyptian Revolution: A Testimony from Washington
+                </em>{" "}
+                (2014) and{" "}
+                <em>
+                  Trump First: How the President Is Changing America and the World
+                </em>{" "}
+                (2020).
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -227,11 +187,10 @@ function About() {
             Understanding Washington. Anticipating the Middle East.
           </p>
           <Link
-            to="/"
-            hash="expertise"
+            to="/contact"
             className="group relative inline-flex items-center gap-3 pb-2 text-[0.8125rem] uppercase tracking-[0.16em] text-gold-soft transition-colors duration-500 ease-wa hover:text-ivory motion-reduce:transition-none"
           >
-            <span>Our Expertise</span>
+            <span>Contact Us</span>
             <span
               aria-hidden="true"
               className="inline-block transition-transform duration-500 ease-wa group-hover:translate-x-1.5 motion-reduce:transition-none"

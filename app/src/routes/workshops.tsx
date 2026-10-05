@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { Reveal } from "../components/reveal";
 import { ASSETS, PAGE_META } from "../lib/site";
 
 export const Route = createFileRoute("/workshops")({
@@ -24,8 +23,6 @@ type Offering = {
   items: string[];
   image: string;
   imageAlt: string;
-  /** true places the image on the right and the content on the left. */
-  flip: boolean;
 };
 
 const OFFERINGS: Offering[] = [
@@ -46,7 +43,6 @@ const OFFERINGS: Offering[] = [
     image: ASSETS.workshopCapitolMeeting,
     imageAlt:
       "Five colleagues in discussion around a boardroom table, with the United States Capitol visible through the window behind them.",
-    flip: false,
   },
   {
     number: "02",
@@ -63,7 +59,6 @@ const OFFERINGS: Offering[] = [
     image: ASSETS.workshopMapBriefing,
     imageAlt:
       "Three analysts reviewing a large map of the Middle East and North Africa spread across a conference table.",
-    flip: true,
   },
   {
     number: "03",
@@ -80,7 +75,6 @@ const OFFERINGS: Offering[] = [
     image: ASSETS.workshopPort,
     imageAlt:
       "A container ship loaded with cargo at a commercial port at sunset, with gantry cranes and energy infrastructure along the waterfront.",
-    flip: false,
   },
   {
     number: "04",
@@ -93,104 +87,8 @@ const OFFERINGS: Offering[] = [
     image: ASSETS.workshopGulfModel,
     imageAlt:
       "A Gulf investment team reviewing an architectural model of a city, with the Dubai skyline behind them.",
-    flip: true,
   },
 ];
-
-/* One workshop row. The image comes first in the document so that mobile stacks
- * image, then title and content; on desktop the two columns are placed
- * explicitly, which is what flips the pairing. The navy backing sits behind the
- * image offset 14px, alternating outward, and the gold number straddles the
- * image's outer bottom corner. */
-function WorkshopRow({ offering }: { offering: Offering }) {
-  const { flip } = offering;
-
-  return (
-    <article
-      className={`grid gap-10 py-14 md:gap-16 md:py-20 ${
-        flip ? "md:grid-cols-[52fr_48fr]" : "md:grid-cols-[48fr_52fr]"
-      }`}
-    >
-      <div
-        className={`relative ${
-          flip ? "md:col-start-2 md:row-start-1" : "md:col-start-1 md:row-start-1"
-        }`}
-      >
-        <span
-          aria-hidden="true"
-          className={`absolute inset-0 bg-navy ${
-            flip
-              ? "translate-x-3.5 translate-y-3.5"
-              : "-translate-x-3.5 translate-y-3.5"
-          }`}
-        />
-        <img
-          src={offering.image}
-          alt={offering.imageAlt}
-          width={1100}
-          height={619}
-          loading="lazy"
-          decoding="async"
-          className="relative block h-auto w-full"
-        />
-        <span
-          aria-hidden="true"
-          className={`pointer-events-none absolute bottom-0 font-display text-5xl leading-none tracking-[-0.02em] text-gold [text-shadow:0_2px_24px_#10243aa6] md:text-6xl ${
-            flip
-              ? "right-0 translate-x-1/4 translate-y-1/3"
-              : "left-0 -translate-x-1/4 translate-y-1/3"
-          }`}
-        >
-          {offering.number}
-        </span>
-      </div>
-
-      <div
-        className={
-          flip ? "md:col-start-1 md:row-start-1" : "md:col-start-2 md:row-start-1"
-        }
-      >
-        <h2 className="font-display text-2xl leading-tight tracking-[-0.01em] text-navy md:text-3xl">
-          {offering.title}
-        </h2>
-
-        {offering.duration ? (
-          <p className="mt-4 text-[0.75rem] uppercase tracking-[0.2em] text-gold">
-            {offering.duration}
-          </p>
-        ) : null}
-
-        {offering.description ? (
-          <p className="mt-6 max-w-[62ch] text-[1.0625rem] leading-[1.8] text-charcoal">
-            {offering.description}
-          </p>
-        ) : null}
-
-        {offering.listLabel ? (
-          <p className="mt-9 text-[0.75rem] uppercase tracking-[0.2em] text-gold">
-            {offering.listLabel}
-          </p>
-        ) : (
-          <span aria-hidden="true" className="mt-9 block h-px w-full bg-ivory-line" />
-        )}
-
-        <ul className="mt-4">
-          {offering.items.map((item) => (
-            <li
-              key={item}
-              className="flex gap-5 border-t border-ivory-line py-4 last:border-b last:border-ivory-line"
-            >
-              <span aria-hidden="true" className="mt-3 h-px w-6 shrink-0 bg-gold/60" />
-              <span className="max-w-[62ch] text-[1rem] leading-[1.7] text-charcoal">
-                {item}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </article>
-  );
-}
 
 function Workshops() {
   return (
@@ -246,14 +144,81 @@ function Workshops() {
         </div>
       </section>
 
-      {/* Offerings */}
+      {/* The four offerings, as equal cards in a 2x2 grid. Each card carries its
+          own photograph above its title, so the images sit with their topics
+          rather than in a separate gallery. Every image is the same 16:9 frame
+          and its source is natively 16:9, so nothing is cropped or stretched.
+          Cards grow vertically as needed, so no topic text is clipped. */}
       <section className="bg-ivory">
         <div className="mx-auto max-w-6xl px-5 pb-24 md:px-8 md:pb-32">
-          <div className="divide-y divide-ivory-line">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8">
             {OFFERINGS.map((offering) => (
-              <Reveal key={offering.number}>
-                <WorkshopRow offering={offering} />
-              </Reveal>
+              <article
+                key={offering.number}
+                className="wa-rise flex flex-col border border-ivory-line bg-ivory-shade sm:aspect-square"
+              >
+                <div className="aspect-video w-full overflow-hidden">
+                  <img
+                    src={offering.image}
+                    alt={offering.imageAlt}
+                    width={1100}
+                    height={619}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+
+                <div className="flex flex-1 flex-col p-8 md:p-10">
+                  <p className="text-[0.75rem] uppercase tracking-[0.2em] text-gold">
+                    {offering.number}
+                  </p>
+
+                  <h2 className="mt-5 font-display text-2xl leading-tight tracking-[-0.01em] text-navy md:text-[1.75rem]">
+                    {offering.title}
+                  </h2>
+
+                  {offering.duration ? (
+                    <p className="mt-4 text-[0.75rem] uppercase tracking-[0.2em] text-charcoal-soft">
+                      {offering.duration}
+                    </p>
+                  ) : null}
+
+                  {offering.description ? (
+                    <p className="mt-5 text-[1rem] leading-[1.75] text-charcoal">
+                      {offering.description}
+                    </p>
+                  ) : null}
+
+                  {offering.listLabel ? (
+                    <p className="mt-7 text-[0.75rem] uppercase tracking-[0.2em] text-gold">
+                      {offering.listLabel}
+                    </p>
+                  ) : (
+                    <span
+                      aria-hidden="true"
+                      className="mt-7 block h-px w-full bg-ivory-line"
+                    />
+                  )}
+
+                  <ul className="mt-3">
+                    {offering.items.map((item) => (
+                      <li
+                        key={item}
+                        className="flex gap-4 border-t border-ivory-line py-3 last:border-b last:border-ivory-line"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="mt-3 h-px w-5 shrink-0 bg-gold/60"
+                        />
+                        <span className="text-[0.9375rem] leading-[1.7] text-charcoal">
+                          {item}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
             ))}
           </div>
         </div>

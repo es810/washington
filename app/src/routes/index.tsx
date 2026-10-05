@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
-import { Monogram } from "../components/site-chrome";
 import { ASSETS } from "../lib/site";
 
 export const Route = createFileRoute("/")({
@@ -12,9 +11,13 @@ export const Route = createFileRoute("/")({
 /* Hero media. The photograph is server-rendered and always present: it is the
  * poster while the video loads and the reduced-motion fallback. The video is
  * mounted only when the visitor has no reduced-motion preference, so a
- * reduced-motion visitor never fetches it. Both run at full opacity with no
- * filter, anchored centre bottom so the lower part of the shot, where the
- * traffic and water move, is never cropped away. */
+ * reduced-motion visitor never fetches it.
+ *
+ * Framing: the frame is 16:9 with open sky in the top third, the Capitol and
+ * its lights between roughly 31% and 66%, and dark water below. The media is
+ * anchored to the top and the container is a full viewport tall, so on a 16:9
+ * screen nothing is cropped at all and on wider screens the crop comes off the
+ * dark water rather than the sky the headline needs. */
 function HeroMedia() {
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
 
@@ -40,15 +43,15 @@ function HeroMedia() {
         <source media="(max-width: 767px)" srcSet={ASSETS.heroPosterMobile} />
         <img
           src={ASSETS.heroPoster}
-          alt="A daytime view across Washington, D.C., with the Washington Monument and the Jefferson Memorial on the skyline beneath a bright blue sky."
-          className="h-full w-full object-cover object-bottom"
+          alt="The illuminated dome of the United States Capitol at night, seen across the Capitol Reflection Pool."
+          className="h-full w-full object-cover object-top"
           fetchPriority="high"
         />
       </picture>
 
       {videoSrc ? (
         <video
-          className="absolute inset-0 h-full w-full object-cover object-bottom"
+          className="absolute inset-0 h-full w-full object-cover object-top"
           src={videoSrc}
           autoPlay
           muted
@@ -62,17 +65,23 @@ function HeroMedia() {
   );
 }
 
-/* The two primary routes, presented as a centred pair in the page flow directly
- * below the video rather than over it. One shared style string so both buttons
- * are identical in colour, typography, padding and corner treatment. */
+/* The two primary routes. One shared style string so both buttons are identical
+ * in colour, typography, padding and corner treatment. */
 const ACTION =
-  "flex w-full items-center justify-center gap-3 bg-hero-orange px-7 py-4 text-[0.8125rem] uppercase tracking-[0.14em] text-hero-navy transition-colors duration-300 ease-wa hover:bg-[#d56820] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hero-navy motion-reduce:transition-none";
+  "flex w-full items-center justify-center gap-3 bg-hero-orange px-7 py-4 text-[0.8125rem] uppercase tracking-[0.14em] text-navy transition-colors duration-300 ease-wa hover:bg-[#d56820] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ivory motion-reduce:transition-none";
 
-function HeroActions() {
+/* The solid black band directly below the video: the supporting paragraph, then
+ * the two actions. */
+function HeroOutro() {
   return (
-    <section className="bg-[#f8f6f1]">
-      <div className="mx-auto max-w-6xl px-5 py-12 md:px-8 md:py-16">
-        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-2">
+    <section className="bg-[#1f1f1f] text-ivory">
+      <div className="mx-auto max-w-6xl px-5 py-16 md:px-8 md:py-24">
+        <p className="mx-auto max-w-[62ch] text-center text-[1.0625rem] leading-[1.9] text-ivory md:text-[1.1875rem] md:leading-[1.9]">
+          Washington Analytica helps professionals navigate the American policy
+          process and understand the shifting geopolitics of the Middle East.
+        </p>
+
+        <div className="mx-auto mt-12 grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-2 md:mt-14">
           <Link to="/" hash="expertise" className={ACTION}>
             <span>Explore Our Expertise</span>
             <span aria-hidden="true">&#8594;</span>
@@ -86,7 +95,7 @@ function HeroActions() {
   );
 }
 
-/* Audience row: the whole row is the target; a gold rule extends and an arrow
+/* Audience row: the whole row is the target; the rule extends and an arrow
  * slides in from the left on hover. */
 function AudienceRow({ label }: { label: string }) {
   return (
@@ -107,8 +116,8 @@ function AudienceRow({ label }: { label: string }) {
   );
 }
 
-/* Founder band: the strip fills with navy from the bottom as the label lifts to
- * ivory. The band itself is the hit area. */
+/* Founder band: the strip fills with charcoal from the bottom as the label
+ * lifts to light gray. The band itself is the hit area. */
 function FounderBand() {
   return (
     <Link
@@ -171,56 +180,39 @@ const IMAGES = [
 function Index() {
   return (
     <>
-      {/* 1. Hero. The footage runs at full opacity in its natural colour, and the
-          container is one viewport less the header, so the whole shot fits and
-          the lower moving area stays on screen. The only treatment is a whisper
-          of white held behind the type. */}
-      <section className="relative isolate flex min-h-[calc(100dvh_-_4rem)] items-start overflow-hidden bg-ivory md:min-h-[calc(100dvh_-_5rem)]">
+      {/* 1. Hero. A full-viewport frame of the Capitol at night, anchored top so
+          the open sky above the dome is never cropped. The headline sits in
+          that sky, centred across two lines and clear of the building. The logo
+          and company name deliberately do not appear over the video. */}
+      <section className="relative isolate flex min-h-dvh items-start justify-center overflow-hidden bg-navy">
         <HeroMedia />
 
-        <div
-          aria-hidden="true"
-          className="wa-hero-scrim absolute inset-x-0 top-0 h-[64%]"
-        />
+        <div aria-hidden="true" className="wa-hero-scrim absolute inset-0" />
 
-        <div className="wa-hero-shadow relative mx-auto w-full max-w-6xl px-5 pb-20 pt-12 sm:pt-16 md:px-8 md:pt-20 md:pb-24">
-          <p className="wa-rise flex items-center gap-4 text-[0.65rem] uppercase tracking-[0.18em] text-hero-ember md:text-[0.72rem] md:tracking-[0.22em]">
-            <span aria-hidden="true" className="h-px w-8 bg-hero-ember/60" />
+        <div className="wa-hero-shadow relative mx-auto w-full max-w-4xl px-5 pt-14 text-center sm:pt-20 md:px-8 md:pt-24">
+          <p className="wa-rise flex items-center justify-center gap-4 text-[0.65rem] uppercase tracking-[0.18em] text-gold-soft md:text-[0.72rem] md:tracking-[0.22em]">
+            <span aria-hidden="true" className="h-px w-8 bg-gold/60" />
             Washington, D.C. Advisory Firm
           </p>
 
-          <div className="wa-rise mt-5 flex items-center gap-3 md:mt-6" data-delay="1">
-            <Monogram className="h-[30px] md:h-9" tone="brand" />
-            <span className="font-display text-xl font-bold leading-none tracking-[-0.01em] text-hero-navy md:text-2xl">
-              Washington Analytica
-            </span>
-          </div>
-
           <h1
-            className="wa-rise mt-7 max-w-4xl font-display text-[1.9rem] leading-[1.1] tracking-[-0.02em] text-hero-navy sm:text-[2.5rem] md:mt-8 md:text-[3.25rem] lg:text-[3.75rem]"
+            className="wa-rise mx-auto mt-6 font-display text-[1.55rem] leading-[1.12] tracking-[-0.02em] text-hero-navy sm:text-[2.25rem] md:mt-7 md:text-[3rem] lg:text-[3.5rem]"
             data-delay="1"
           >
             Understanding Washington.
             <br />
             Anticipating the Middle East.
           </h1>
-
-          <p
-            className="wa-rise mt-6 max-w-[54ch] text-[1.0625rem] leading-[1.7] text-hero-slate md:mt-7"
-            data-delay="2"
-          >
-            Washington Analytica helps professionals navigate the American policy
-            process and understand the shifting geopolitics of the Middle East.
-          </p>
         </div>
       </section>
 
-      {/* 2. Entry actions */}
-      <HeroActions />
+      {/* 2. Solid black band below the video: the supporting paragraph and the
+          two actions, all outside the video. */}
+      <HeroOutro />
 
       {/* 3. Introduction, then the four-image row 36px below the text. All four
-          frames are equal, 3:2, on one row, with an orange rule and a numbered
-          caption under each. */}
+          frames equal and 3:2, with an orange rule and a numbered caption under
+          each. */}
       <section className="bg-ivory">
         <div className="mx-auto max-w-6xl px-5 pb-16 pt-20 md:px-8 md:pt-28 md:pb-20">
           <div className="mx-auto max-w-[68ch] border-t border-ivory-line pt-10 md:pt-14">
@@ -278,7 +270,8 @@ function Index() {
         </div>
       </section>
 
-      {/* 4. Our Expertise */}
+      {/* 4. Our Expertise. Two panels of equal width and equal prominence: same
+          rule, same heading treatment, same spacing, stacking on mobile. */}
       <section id="expertise" className="border-t border-ivory-line bg-ivory-shade">
         <div className="mx-auto max-w-6xl px-5 py-20 md:px-8 md:py-28">
           <div className="flex items-baseline gap-6">
@@ -288,27 +281,24 @@ function Index() {
             </h2>
           </div>
 
-          <div className="mt-14 grid gap-12 md:mt-20 md:grid-cols-12 md:gap-16">
-            <article className="wa-rise md:col-span-7">
+          <div className="mt-14 grid gap-12 md:mt-20 md:grid-cols-2 md:gap-16">
+            <article className="wa-rise">
               <span aria-hidden="true" className="block h-px w-full bg-navy/20" />
               <h3 className="mt-8 font-display text-2xl leading-tight tracking-[-0.01em] text-navy md:text-3xl">
                 Navigating Washington
               </h3>
-              <p className="mt-5 max-w-[54ch] text-[1.0625rem] leading-[1.8] text-charcoal">
+              <p className="mt-5 text-[1.0625rem] leading-[1.8] text-charcoal">
                 Practical understanding of how decisions are made inside
                 Washington and how to navigate the American policy process.
               </p>
             </article>
 
-            <article
-              className="wa-rise md:col-span-5 md:border-l md:border-ivory-line md:pl-16"
-              data-delay="1"
-            >
+            <article className="wa-rise" data-delay="1">
               <span aria-hidden="true" className="block h-px w-full bg-navy/20" />
               <h3 className="mt-8 font-display text-2xl leading-tight tracking-[-0.01em] text-navy md:text-3xl">
                 Understanding the Middle East
               </h3>
-              <p className="mt-5 max-w-[54ch] text-[1.0625rem] leading-[1.8] text-charcoal">
+              <p className="mt-5 text-[1.0625rem] leading-[1.8] text-charcoal">
                 Disciplined analysis of regional dynamics and how decisions made
                 inside the Beltway affect the Middle East, and vice versa.
               </p>
@@ -345,7 +335,7 @@ function Index() {
             <div className="wa-rise md:col-span-5">
               <img
                 src={ASSETS.founderPortrait}
-                alt="Mohamed Elmenshawy, Founder of Washington Analytica."
+                alt="Mohamed Elmenshawy, Founder and Executive Director of Washington Analytica."
                 width={724}
                 height={904}
                 className="block h-auto w-full max-w-[340px] border border-ivory-line"
@@ -355,7 +345,7 @@ function Index() {
               </p>
               <span aria-hidden="true" className="mt-4 block h-px w-14 bg-gold" />
               <p className="mt-4 text-[0.75rem] uppercase tracking-[0.2em] text-charcoal-soft">
-                Founder
+                Founder and Executive Director
               </p>
             </div>
 

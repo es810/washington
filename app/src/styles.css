@@ -22,22 +22,30 @@
   --font-display: "Newsreader", Georgia, "Times New Roman", serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 
-  --color-navy: #10243a;
-  --color-navy-deep: #0b1a2b;
-  --color-navy-lift: #16304c;
-  --color-ivory: #f7f5f0;
-  --color-ivory-line: #e7e2d8;
-  --color-ivory-shade: #efebe2;
-  --color-gold: #b59a64;
-  --color-gold-soft: #c9b183;
-  --color-charcoal: #252b33;
-  --color-charcoal-soft: #4a525c;
+  /* Neutral gray palette with the orange accent retained.
+   * The token names are kept from the original build; the values below are the
+   * live palette: charcoal for dark grounds and type, medium gray for secondary
+   * elements, light gray for light surfaces, orange for every accent. */
+  --color-navy: #333333;
+  --color-navy-deep: #1f1f1f;
+  --color-navy-lift: #3d3d3d;
+  --color-ivory: #f2f2f2;
+  --color-ivory-line: #e2e2e2;
+  --color-ivory-shade: #e8e8e8;
+  --color-gold: #e7792b;
+  --color-gold-soft: #f0924e;
+  --color-charcoal: #333333;
+  --color-charcoal-soft: #666666;
 
-  /* Homepage hero palette (daytime video treatment) */
-  --color-hero-navy: #102f4a;
-  --color-hero-slate: #263e50;
+  /* Hero tokens. The hero sits on dark footage, so the "hero" text tones are
+   * light: light gray for the headline, a softer light gray for the supporting
+   * line. Orange stays the accent, with a deeper orange for links on light
+   * grounds where the bright orange would not hold contrast. */
+  --color-hero-navy: #f2f2f2;
+  --color-hero-slate: #dcdcdc;
   --color-hero-orange: #e7792b;
   --color-hero-ember: #a84316;
+  --color-link: #a84316;
 
   --ease-wa: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
@@ -164,24 +172,23 @@
   }
 }
 
-/* Readability scrim for the daytime hero. A whisper of white held behind the
- * type only: 20% at the left edge, gone by 55% of the width, and masked out
- * vertically so it fades away well above the cityscape and never reaches it.
- * The footage itself is untouched: full opacity, no filter. */
+/* Readability wash for the hero. The headline sits in the open sky above the
+ * Capitol, which is already the darkest band of the frame, so this is only a
+ * whisper, weighted to the top and fading out well above the dome so the
+ * building and the water keep their natural tone. */
 .wa-hero-scrim {
-  background-image: linear-gradient(
-    to right,
-    rgb(255 255 255 / 0.2) 0%,
-    rgb(255 255 255 / 0) 55%
+  background-image: radial-gradient(
+    ellipse 78% 40% at 50% 19%,
+    rgb(0 0 0 / 0.34) 0%,
+    rgb(0 0 0 / 0.16) 55%,
+    rgb(0 0 0 / 0) 100%
   );
-  -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
 }
 
-/* A very subtle light halo behind the hero type, so deep navy stays legible
- * over the brightest clouds without raising the white overlay. */
+/* A soft dark halo behind the hero type, so light text holds over the lit dome
+ * and the row of lights without needing a heavier wash. */
 .wa-hero-shadow {
   text-shadow:
-    0 1px 2px rgb(255 255 255 / 0.45),
-    0 2px 14px rgb(255 255 255 / 0.3);
+    0 1px 2px rgb(0 0 0 / 0.55),
+    0 2px 18px rgb(0 0 0 / 0.45);
 }

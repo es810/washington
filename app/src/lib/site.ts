@@ -5,7 +5,7 @@ export const SITE = {
   city: "Washington, D.C.",
 } as const;
 
-export type SitePath = "/" | "/about" | "/workshops" | "/whom-we-serve";
+export type SitePath = "/" | "/about" | "/workshops" | "/whom-we-serve" | "/contact";
 
 export type NavItem = {
   label: string;
@@ -19,11 +19,13 @@ export const NAV_LINKS: NavItem[] = [
   { label: "Our Workshops", to: "/workshops" },
   { label: "Whom We Serve", to: "/whom-we-serve" },
   { label: "About Us", to: "/about" },
+  { label: "Contact Us", to: "/contact" },
 ];
 
 export const FOOTER_LINKS: NavItem[] = [
   { label: "Home", to: "/" },
   { label: "About Us", to: "/about" },
+  { label: "Contact Us", to: "/contact" },
 ];
 
 export const ASSETS = {
@@ -31,6 +33,8 @@ export const ASSETS = {
   heroVideoMobile: "/assets/hero-mobile.mp4",
   heroPoster: "/assets/hero-poster.jpg",
   heroPosterMobile: "/assets/hero-poster-mobile.jpg",
+  logoWhite: "/assets/logo-wa-white.png",
+  logoBrand: "/assets/logo-wa-brand.png",
   founderPortrait: "/assets/founder-portrait.jpg",
   colonnade: "/assets/washington-dc-colonnade.png",
   rowHouses: "/assets/washington-dc-rowhouses.png",
@@ -38,8 +42,6 @@ export const ASSETS = {
   galleryUsUae: "/assets/gallery-02-us-uae.jpg",
   galleryHormuz: "/assets/gallery-03-hormuz.jpg",
   galleryElection2028: "/assets/gallery-04-election-2028.jpg",
-  logoWhite: "/assets/logo-wa-white.png",
-  logoBrand: "/assets/logo-wa-brand.png",
   workshopCapitolMeeting: "/assets/workshop-01-capitol-meeting.jpg",
   workshopMapBriefing: "/assets/workshop-02-map-briefing.jpg",
   workshopPort: "/assets/workshop-03-port.jpg",
@@ -61,5 +63,10 @@ export const PAGE_META = {
     title: "Whom We Serve | Washington Analytica",
     description:
       "Washington Analytica serves corporations, diplomats, media outlets and international organizations, investment firms, and government relations professionals.",
+  },
+  contact: {
+    title: "Contact Us | Washington Analytica",
+    description:
+      "Contact Washington Analytica in Washington, DC. Send an enquiry using the form, or write to Info@washingtonanalytica.com.",
   },
 } as const;
