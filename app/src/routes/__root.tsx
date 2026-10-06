@@ -29,7 +29,7 @@ const appMeta = appMetaJson as AppMeta;
 
 const FALLBACK_TITLE = "Washington Analytica | Washington, D.C. Advisory Firm";
 const FALLBACK_DESCRIPTION =
-  "Washington Analytica helps professionals navigate the American policy process and understand the shifting geopolitics of the Middle East.";
+  "Washington Analytica helps navigate the American policy process and understand the shifting geopolitics of the Middle East.";
 
 const APP_HOST_ZONES = ["higgsfield.app", "higgsfield-dev.app"];
 
