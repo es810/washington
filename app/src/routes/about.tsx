@@ -141,40 +141,24 @@ function About() {
                   He spent four years as a researcher at the Middle East Institute
                   after serving as editor-in-chief of The Washington Report. He has
                   also authored numerous research papers and reports on American
-                  politics for leading Arab and American think tanks.
+                  politics for leading Arab and American think tanks. He holds a
+                  Bachelor’s degree in Political Science from Cairo University, a
+                  Master’s degree in International Relations from the University
+                  of Akron in Ohio, and a Master of Business Administration from
+                  American University in Washington, D.C.
+                </p>
+                <p>
+                  He is the author of{" "}
+                  <em>
+                    America and the Egyptian Revolution: A Testimony from Washington
+                  </em>{" "}
+                  (2014) and{" "}
+                  <em>
+                    Trump First: How the President Is Changing America and the World
+                  </em>{" "}
+                  (2020).
                 </p>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Education and books, as one continuous text section */}
-      <section className="bg-ivory">
-        <div className="mx-auto max-w-6xl px-5 py-20 md:px-8 md:py-28">
-          <div className="mx-auto max-w-[68ch]">
-            <h2 className="font-display text-3xl leading-tight tracking-[-0.02em] text-navy md:text-4xl">
-              Education and Books
-            </h2>
-            <div className="mt-10 space-y-6 text-[1.0625rem] leading-[1.8] text-charcoal">
-              <p>
-                Mohamed Elmenshawy holds a Bachelor’s degree in Political Science
-                from Cairo University, a Master’s degree in International
-                Relations from the University of Akron in Ohio, and a Master of
-                Business Administration from American University in Washington,
-                D.C.
-              </p>
-              <p>
-                He is the author of{" "}
-                <em>
-                  America and the Egyptian Revolution: A Testimony from Washington
-                </em>{" "}
-                (2014) and{" "}
-                <em>
-                  Trump First: How the President Is Changing America and the World
-                </em>{" "}
-                (2020).
-              </p>
             </div>
           </div>
         </div>

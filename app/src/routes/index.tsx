@@ -77,8 +77,8 @@ function HeroOutro() {
     <section className="bg-[#1f1f1f] text-ivory">
       <div className="mx-auto max-w-6xl px-5 py-16 md:px-8 md:py-24">
         <p className="mx-auto max-w-[62ch] text-center text-[1.0625rem] leading-[1.9] text-ivory md:text-[1.1875rem] md:leading-[1.9]">
-          Washington Analytica helps professionals navigate the American policy
-          process and understand the shifting geopolitics of the Middle East.
+          Washington Analytica helps navigate the American policy process and
+          understand the shifting geopolitics of the Middle East.
         </p>
 
         <div className="mx-auto mt-12 grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-2 md:mt-14">
@@ -146,7 +146,6 @@ const IMAGES = [
   {
     src: ASSETS.galleryCapitol,
     alt: "The United States Capitol at night, its dome and colonnaded wings lit against a dark sky and reflected in the wet stone plaza.",
-    number: "01",
     caption: "Washington Institutions",
     mode: "photo",
     frameColor: undefined,
@@ -154,7 +153,6 @@ const IMAGES = [
   {
     src: ASSETS.galleryUsUae,
     alt: "A double exposure: a handshake in the foreground over the New York skyline and a United States flag on the left, the Dubai skyline on the right, with a blurred business meeting behind.",
-    number: "02",
     caption: "Strategic Partnerships",
     mode: "photo",
     frameColor: undefined,
@@ -162,7 +160,6 @@ const IMAGES = [
   {
     src: ASSETS.galleryHormuz,
     alt: "Donald Trump before a satellite map of the Strait of Hormuz labelled with Iran, Bandar Abbas, the Persian Gulf, Hormuz Island, the Gulf of Oman, Dubai, and Fujairah.",
-    number: "03",
     caption: "Regional Affairs",
     mode: "artwork",
     frameColor: "#e2b87c",
@@ -170,7 +167,6 @@ const IMAGES = [
   {
     src: ASSETS.galleryElection2028,
     alt: "A graphic reading 2028, Vote, Presidential Election, set in blue, white, and red on a dark blue field.",
-    number: "04",
     caption: "US Elections",
     mode: "artwork",
     frameColor: "#343c6b",
@@ -229,8 +225,8 @@ function Index() {
               className="wa-rise mt-6 text-[1.0625rem] leading-[1.8] text-charcoal-soft"
               data-delay="1"
             >
-              Our team combines American professionals and regional specialists to
-              deliver practical knowledge and clear-eyed assessments.
+              Our team combines American and regional specialists to deliver
+              practical knowledge and clear-eyed assessments.
             </p>
           </div>
 
@@ -258,11 +254,8 @@ function Index() {
                   className="block h-[3px] w-full origin-left scale-x-[0.35] bg-[#e27123] transition-transform duration-500 ease-wa group-hover:scale-x-100 motion-reduce:transition-none"
                 />
 
-                <p className="mt-3 flex flex-wrap items-baseline gap-x-2.5 gap-y-1 text-[0.6875rem] uppercase tracking-[0.16em]">
-                  <span aria-hidden="true" className="text-[#e27123]">
-                    {item.number}
-                  </span>
-                  <span className="text-navy">{item.caption}</span>
+                <p className="mt-3 text-[0.6875rem] uppercase tracking-[0.16em] text-navy">
+                  {item.caption}
                 </p>
               </li>
             ))}
