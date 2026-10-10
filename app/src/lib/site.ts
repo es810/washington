@@ -67,6 +67,6 @@ export const PAGE_META = {
   contact: {
     title: "Contact Us | Washington Analytica",
     description:
-      "Contact Washington Analytica in Washington, DC. Send an enquiry using the form, or write to Info@washingtonanalytica.com.",
+      "Contact Washington Analytica in Washington, DC. Send an enquiry using the form, or write to Mohamed@washingtonanalytica.com.",
   },
 } as const;

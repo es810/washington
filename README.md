@@ -79,7 +79,7 @@ Submissions go to a server function (`src/lib/api/contact.functions.ts`) which:
    `app/migrations/`. Storing it is what makes a submission accepted;
 3. then hands it to a transactional email provider, if one is configured.
 
-Email delivery to Info@washingtonanalytica.com needs ONE secret, set as an
+Email delivery to Mohamed@washingtonanalytica.com needs ONE secret, set as an
 environment variable, not in code:
 
 - `CONTACT_EMAIL_API_KEY` — an API key for Resend's send API

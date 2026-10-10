@@ -4,7 +4,7 @@ import { z } from "zod";
 import { bindings } from "../bindings.server";
 
 /* Where enquiries are addressed. */
-const CONTACT_INBOX = "Info@washingtonanalytica.com";
+const CONTACT_INBOX = "Mohamed@washingtonanalytica.com";
 
 const ContactInput = z.object({
   name: z.string().trim().min(1).max(120),
