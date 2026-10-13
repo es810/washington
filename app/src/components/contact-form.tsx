@@ -57,7 +57,7 @@ export function ContactForm() {
       setNotice(
         result.delivered
           ? "Thank you. Your message has been sent."
-          : "Thank you. Your message has been received.",
+          : "Your message was received, but we could not email it. Please contact us directly at Mohamed@washingtonanalytica.com.",
       );
       setName("");
       setEmail("");

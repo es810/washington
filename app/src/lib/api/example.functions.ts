@@ -7,7 +7,7 @@ import { bindings } from "../bindings.server";
 export const getGreeting = createServerFn({ method: "POST" })
   .inputValidator(z.object({ name: z.string().min(1) }))
   .handler(async ({ data }) => {
-    const { DB, HF_ENV } = bindings();
+    const { DB, HF_ENV } = await bindings();
     let count = 0;
     if (DB) {
       const row = await DB.prepare("SELECT 1 AS n").first<{ n: number }>();
