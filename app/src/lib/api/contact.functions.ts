@@ -35,7 +35,7 @@ async function deliverToInbox(data: {
   email: string;
   message: string;
 }): Promise<{ delivered: boolean; note: string }> {
-  const { CONTACT_EMAIL_API_KEY, CONTACT_EMAIL_FROM } = await bindings();
+  const { CONTACT_EMAIL_API_KEY, CONTACT_EMAIL_FROM } = bindings();
   if (!CONTACT_EMAIL_API_KEY) {
     return { delivered: false, note: "no email provider configured" };
   }
@@ -66,7 +66,7 @@ async function deliverToInbox(data: {
 export const sendContactMessage = createServerFn({ method: "POST" })
   .validator(ContactInput)
   .handler(async ({ data }): Promise<ContactResult> => {
-    const { DB } = await bindings();
+    const { DB } = bindings();
 
     // Store first when a database is attached. On this host there is no
     // database, so the submission is logged and then emailed if a provider

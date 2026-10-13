@@ -1,5 +1,5 @@
-// Server-side settings for this deployment. Cloudflare bindings are the source
-// of truth in production; process.env remains the fallback for local Node runs.
+// Server-side settings for the Node deployment. Email delivery is optional:
+// set CONTACT_EMAIL_API_KEY (Resend) and, if configured, CONTACT_EMAIL_FROM.
 type AppEnv = {
   DB?: {
     prepare: (query: string) => {
@@ -11,22 +11,10 @@ type AppEnv = {
   HF_ENV?: string;
 };
 
-export async function bindings(): Promise<AppEnv> {
-  // `cloudflare:workers` exists in workerd, but not in the local Node server.
-  // Keep the import dynamic so local development can use process.env.
-  let workerEnv: Partial<AppEnv> = {};
-  try {
-    const cloudflare = await import("cloudflare:workers");
-    workerEnv = (cloudflare.env ?? {}) as Partial<AppEnv>;
-  } catch {
-    // Running outside Cloudflare Workers.
-  }
-
+export function bindings(): AppEnv {
   return {
-    DB: workerEnv.DB,
-    CONTACT_EMAIL_API_KEY:
-      workerEnv.CONTACT_EMAIL_API_KEY ?? process.env.CONTACT_EMAIL_API_KEY,
-    CONTACT_EMAIL_FROM: workerEnv.CONTACT_EMAIL_FROM ?? process.env.CONTACT_EMAIL_FROM,
-    HF_ENV: workerEnv.HF_ENV ?? process.env.HF_ENV,
+    CONTACT_EMAIL_API_KEY: process.env.CONTACT_EMAIL_API_KEY,
+    CONTACT_EMAIL_FROM: process.env.CONTACT_EMAIL_FROM,
+    HF_ENV: process.env.HF_ENV,
   };
 }
